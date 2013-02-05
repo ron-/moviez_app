@@ -38,14 +38,15 @@ def get_title_data
 
   sql = "insert into moviez (title, year, rated, runtime, genre, director, writer, actors) values ('#{title}', '#{year}', '#{rated}', '#{runtime}', '#{genre}', '#{director}', '#{writer}', '#{actors}')"
 
-  @conn.exec(sql)
+  conn = PG.connect(:dbname =>'moviez_app', :host => 'localhost')
+  conn.exec(sql)
+  conn.close
 
   print "\n #{title} has been added! "
   print "Press return to continue"
   gets
 end
 
-@conn = PG.connect(:dbname =>'moviez_app', :host => 'localhost')
 
 response = menu
 while response != 'q'
@@ -55,6 +56,5 @@ while response != 'q'
   response = menu
 end
 
-@conn.close
 
 
